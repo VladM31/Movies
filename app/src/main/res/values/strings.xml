@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="sort">Sort</string>
+    <string name="movies">Movies</string>
+    <string name="movie_poster">Movie poster</string>
+    <string name="_2h_1min_action_adventure_comedy">2h 1min - Action, Adventure, Comedy</string>
+    <string name="title_temp">Title</string>
+    <string name="on_my_watchlist">ON MY WATCHLIST</string>
+    <string name="close_movie_details">Close movie details</string>
+    <string name="add_to_watchlist">+ Add to watchlist</string>
+    <string name="remove_from_watchlist">Remove from watchlist</string>
+
+    <string name="watch_trailer">Watch trailer</string>
+    <string name="max_rating_text">/10</string>
+    <string name="short_description">Short Description</string>
+    <string name="description">Description</string>
+    <string name="details">Details</string>
+    <string name="genre">Genre</string>
+    <string name="released_date">Released date</string>
+    <string name="cancel">Cancel</string>
+</resources>
