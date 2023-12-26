@@ -18,4 +18,5 @@
     <string name="genre">Genre</string>
     <string name="released_date">Released date</string>
     <string name="cancel">Cancel</string>
+    <string name="can_t_open_trailer">Can\'t open trailer</string>
 </resources>

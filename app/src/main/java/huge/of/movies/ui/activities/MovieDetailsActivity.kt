@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import huge.of.movies.R
 
@@ -35,6 +37,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         bindMovie()
         bindInWatchList()
+        bindStartYoutube()
 
         binding.pinWatchList.setOnClickListener {
             detailsViewModel.sentAction(MovieDetailsAction.ToggleWatchList)
@@ -50,9 +53,11 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun handleEnd() {
-        setResult(if (detailsViewModel.state.value.isChangedWatchList) RESULT_OK else RESULT_CANCELED, Intent().apply {
-            putExtra(MOVIE_ID, detailsViewModel.state.value.movie?.id)
-        })
+        setResult(
+            if (detailsViewModel.state.value.isChangedWatchList) RESULT_OK else RESULT_CANCELED,
+            Intent().apply {
+                putExtra(MOVIE_ID, detailsViewModel.state.value.movie?.id)
+            })
         finish()
     }
 
@@ -66,6 +71,28 @@ class MovieDetailsActivity : AppCompatActivity() {
                     releasedDateText.text = releasedDateFormatter.format(movie.releasedDate)
                     poster.setImageResource(movie.image)
                 }
+            }
+        }
+    }
+
+    private fun bindStartYoutube() {
+        binding.openTrailer.setOnClickListener {
+            val trailerLink =
+                detailsViewModel.state.value.movie?.trailerLink ?: return@setOnClickListener
+
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        trailerLink.toUri()
+                    )
+                )
+            } catch (_: Exception) {
+                Toast.makeText(
+                    this,
+                    R.string.can_t_open_trailer,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -87,7 +114,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private fun loadMovie() {
         val id = intent.getLongExtra(MOVIE_ID, DEF_MOVIE_ID)
-        if (detailsViewModel.state.value.isLoading.not() && detailsViewModel.state.value.movie?.id != id) {
+        if (detailsViewModel.state.value.run { isLoading.not() && movie?.id != id }) {
 
             if (id == DEF_MOVIE_ID) {
                 finish()
